@@ -9,13 +9,11 @@ entity ma_engine is
         start  : in  std_logic;
         sel    : in  std_logic;
         price  : in  std_logic_vector(15 downto 0);
-        action : out std_logic_vector(1 downto 0);
-        done   : out std_logic
+        action : out std_logic_vector(1 downto 0)
     );
 end entity;
 
 architecture rtl of ma_engine is
-    constant ACT_NONE : std_logic_vector(1 downto 0) := "00";
     constant ACT_SELL : std_logic_vector(1 downto 0) := "01";
     constant ACT_BUY  : std_logic_vector(1 downto 0) := "10";
 
@@ -27,8 +25,12 @@ architecture rtl of ma_engine is
     signal vld_b  : std_logic_vector(15 downto 0) := (others => '0');
     signal sum_a  : unsigned(19 downto 0) := (others => '0');
     signal sum_b  : unsigned(19 downto 0) := (others => '0');
-    signal last_a : std_logic_vector(1 downto 0) := ACT_NONE;
-    signal last_b : std_logic_vector(1 downto 0) := ACT_NONE;
+    signal last_a : std_logic_vector(1 downto 0) := "00";
+    signal last_b : std_logic_vector(1 downto 0) := "00";
+    signal le_a   : std_logic := '0';
+    signal ge_a   : std_logic := '0';
+    signal le_b   : std_logic := '0';
+    signal ge_b   : std_logic := '0';
 
     attribute syn_srlstyle : string;
     attribute syn_srlstyle of win_a : signal is "registers";
@@ -36,72 +38,71 @@ architecture rtl of ma_engine is
     attribute syn_srlstyle of vld_a : signal is "registers";
     attribute syn_srlstyle of vld_b : signal is "registers";
 
-    signal calc     : std_logic := '0';
-    signal full     : std_logic;
-    signal tail     : std_logic_vector(15 downto 0);
-    signal prev     : unsigned(15 downto 0);
-    signal sum_cur  : unsigned(19 downto 0);
-    signal last_cur : std_logic_vector(1 downto 0);
-    signal price_u  : unsigned(15 downto 0);
-    signal oldest   : unsigned(15 downto 0);
-    signal new_sum  : unsigned(19 downto 0);
-    signal old_avg  : unsigned(15 downto 0);
-    signal new_avg  : unsigned(15 downto 0);
-    signal buy      : std_logic;
-    signal sell     : std_logic;
-    signal next_act : std_logic_vector(1 downto 0);
+    signal calc    : std_logic := '0';
+    signal price_u : unsigned(15 downto 0);
+    signal ns_a    : unsigned(19 downto 0);
+    signal ns_b    : unsigned(19 downto 0);
+    signal gt_a    : std_logic;
+    signal lt_a    : std_logic;
+    signal gt_b    : std_logic;
+    signal lt_b    : std_logic;
+    signal nact_a  : std_logic_vector(1 downto 0);
+    signal nact_b  : std_logic_vector(1 downto 0);
 begin
-    full     <= vld_b(15) when sel = '1' else vld_a(15);
-    tail     <= win_b(15) when sel = '1' else win_a(15);
-    prev     <= unsigned(win_b(0)) when sel = '1' else unsigned(win_a(0));
-    sum_cur  <= sum_b when sel = '1' else sum_a;
-    last_cur <= last_b when sel = '1' else last_a;
-    price_u  <= unsigned(price);
+    price_u <= unsigned(price);
 
-    oldest  <= unsigned(tail) when full = '1' else (others => '0');
-    new_sum <= sum_cur + price_u - oldest;
-    old_avg <= sum_cur(19 downto 4);
-    new_avg <= new_sum(19 downto 4);
+    ns_a <= sum_a + price_u - unsigned(win_a(15));
+    ns_b <= sum_b + price_u - unsigned(win_b(15));
 
-    buy  <= '1' when full = '1' and prev <= old_avg and price_u > new_avg else '0';
-    sell <= '1' when full = '1' and prev >= old_avg and price_u < new_avg else '0';
+    gt_a <= '1' when price_u > ns_a(19 downto 4) else '0';
+    lt_a <= '1' when price_u < ns_a(19 downto 4) else '0';
+    gt_b <= '1' when price_u > ns_b(19 downto 4) else '0';
+    lt_b <= '1' when price_u < ns_b(19 downto 4) else '0';
 
-    next_act <= ACT_BUY  when buy = '1' else
-                ACT_SELL when sell = '1' else
-                last_cur;
+    nact_a <= ACT_BUY  when (vld_a(15) and le_a and gt_a) = '1' else
+              ACT_SELL when (vld_a(15) and ge_a and lt_a) = '1' else
+              last_a;
+    nact_b <= ACT_BUY  when (vld_b(15) and le_b and gt_b) = '1' else
+              ACT_SELL when (vld_b(15) and ge_b and lt_b) = '1' else
+              last_b;
 
     process(clk)
     begin
         if rising_edge(clk) then
-            done <= '0';
             calc <= start;
 
             if clear = '1' then
+                win_a  <= (others => (others => '0'));
+                win_b  <= (others => (others => '0'));
                 vld_a  <= (others => '0');
                 vld_b  <= (others => '0');
                 sum_a  <= (others => '0');
                 sum_b  <= (others => '0');
-                last_a <= ACT_NONE;
-                last_b <= ACT_NONE;
+                last_a <= "00";
+                last_b <= "00";
             elsif calc = '1' then
-                action <= next_act;
-                done   <= '1';
                 if sel = '1' then
                     win_b(0) <= price;
                     for k in 1 to 15 loop
                         win_b(k) <= win_b(k - 1);
                     end loop;
                     vld_b  <= vld_b(14 downto 0) & '1';
-                    sum_b  <= new_sum;
-                    last_b <= next_act;
+                    sum_b  <= ns_b;
+                    le_b   <= not gt_b;
+                    ge_b   <= not lt_b;
+                    last_b <= nact_b;
+                    action <= nact_b;
                 else
                     win_a(0) <= price;
                     for k in 1 to 15 loop
                         win_a(k) <= win_a(k - 1);
                     end loop;
                     vld_a  <= vld_a(14 downto 0) & '1';
-                    sum_a  <= new_sum;
-                    last_a <= next_act;
+                    sum_a  <= ns_a;
+                    le_a   <= not gt_a;
+                    ge_a   <= not lt_a;
+                    last_a <= nact_a;
+                    action <= nact_a;
                 end if;
             end if;
         end if;

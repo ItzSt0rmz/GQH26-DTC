@@ -19,7 +19,7 @@ entity top is
 end entity;
 
 architecture rtl of top is
-    type state_t is (S_WAIT, S_CLEAR, S_START, S_BUSY, S_SEND, S_SENDW);
+    type state_t is (S_WAIT, S_CLEAR, S_SEND, S_POST, S_SENDW);
     signal state : state_t := S_WAIT;
 
     signal rx_data  : std_logic_vector(7 downto 0);
@@ -27,18 +27,13 @@ architecture rtl of top is
 
     signal req      : std_logic_vector(63 downto 0) := (others => '0');
     signal byte_cnt : unsigned(2 downto 0) := (others => '0');
-    signal idle_cnt : unsigned(IDLE_WIDTH - 1 downto 0) := (others => '0');
-    constant IDLE_MAX : unsigned(IDLE_WIDTH - 1 downto 0) := (others => '1');
+    signal idle_cnt : unsigned(IDLE_WIDTH downto 0) := (others => '0');
+    signal sh_n     : unsigned(1 downto 0) := (others => '0');
+    signal sh_en    : std_logic;
 
-    signal slot      : std_logic := '0';
     signal eng_clear : std_logic := '0';
     signal eng_start : std_logic := '0';
-    signal eng_sel   : std_logic;
-    signal eng_price : std_logic_vector(15 downto 0);
     signal eng_act   : std_logic_vector(1 downto 0);
-    signal eng_done  : std_logic;
-    signal act1      : std_logic_vector(1 downto 0) := "00";
-    signal act2      : std_logic_vector(1 downto 0) := "00";
 
     signal tx_idx   : unsigned(2 downto 0) := (others => '0');
     signal tx_data  : std_logic_vector(7 downto 0);
@@ -56,20 +51,15 @@ begin
         port map (clk => sys_clk, data => tx_data, start => tx_start, tx => uart_tx_o, busy => tx_busy);
 
     u_eng : entity work.ma_engine
-        port map (clk => sys_clk, clear => eng_clear, start => eng_start, sel => eng_sel,
-                  price => eng_price, action => eng_act, done => eng_done);
-
-    eng_sel   <= req(41) when slot = '0' else req(17);
-    eng_price <= req(39 downto 24) when slot = '0' else req(15 downto 0);
+        port map (clk => sys_clk, clear => eng_clear, start => eng_start, sel => req(57),
+                  price => req(55 downto 40), action => eng_act);
 
     with tx_idx select tx_data <=
-        req(63 downto 56) when "000",
-        req(55 downto 48) when "001",
-        req(47 downto 40) when "010",
-        "000000" & act1   when "011",
-        req(23 downto 16) when "100",
-        "000000" & act2   when "101",
-        x"00"             when others;
+        "000000" & eng_act when "011" | "101",
+        x"00"              when "110" | "111",
+        req(63 downto 56)  when others;
+
+    sh_en <= '1' when (state = S_WAIT and rx_valid = '1') or sh_n /= 0 else '0';
 
     led0_n <= not pkt_tog;
     led1_n <= '1' when byte_cnt = 0 else '0';
@@ -81,6 +71,14 @@ begin
             eng_start <= '0';
             tx_start  <= '0';
 
+            if sh_en = '1' then
+                req <= req(55 downto 0) & rx_data;
+            end if;
+
+            if sh_n /= 0 then
+                sh_n <= sh_n - 1;
+            end if;
+
             if byte_cnt = 0 or rx_valid = '1' then
                 idle_cnt <= (others => '0');
             else
@@ -90,12 +88,11 @@ begin
             case state is
                 when S_WAIT =>
                     if rx_valid = '1' then
-                        req      <= req(55 downto 0) & rx_data;
                         byte_cnt <= byte_cnt + 1;
                         if byte_cnt = 7 then
                             state <= S_CLEAR;
                         end if;
-                    elsif idle_cnt = IDLE_MAX then
+                    elsif idle_cnt(IDLE_WIDTH) = '1' then
                         byte_cnt <= (others => '0');
                     end if;
 
@@ -103,37 +100,38 @@ begin
                     if req(63 downto 48) = x"0000" then
                         eng_clear <= '1';
                     end if;
-                    slot    <= '0';
+                    tx_idx  <= (others => '0');
                     pkt_tog <= not pkt_tog;
-                    state   <= S_START;
-
-                when S_START =>
-                    eng_start <= '1';
-                    state     <= S_BUSY;
-
-                when S_BUSY =>
-                    if eng_done = '1' then
-                        if slot = '0' then
-                            act1  <= eng_act;
-                            slot  <= '1';
-                            state <= S_START;
-                        else
-                            act2   <= eng_act;
-                            tx_idx <= (others => '0');
-                            state  <= S_SEND;
-                        end if;
-                    end if;
+                    state   <= S_SEND;
 
                 when S_SEND =>
                     if tx_busy = '0' then
                         tx_start <= '1';
-                        state    <= S_SENDW;
+                        state    <= S_POST;
+                    end if;
+
+                when S_POST =>
+                    case tx_idx is
+                        when "000" =>
+                            sh_n <= "01";
+                        when "001" =>
+                            sh_n      <= "01";
+                            eng_start <= '1';
+                        when "010" =>
+                            sh_n <= "11";
+                        when "011" =>
+                            eng_start <= '1';
+                        when others =>
+                            null;
+                    end case;
+                    if tx_idx = 7 then
+                        state <= S_WAIT;
+                    else
+                        state <= S_SENDW;
                     end if;
 
                 when S_SENDW =>
-                    if tx_idx = 7 then
-                        state <= S_WAIT;
-                    elsif tx_start = '0' and tx_busy = '0' then
+                    if tx_busy = '0' then
                         tx_idx <= tx_idx + 1;
                         state  <= S_SEND;
                     end if;

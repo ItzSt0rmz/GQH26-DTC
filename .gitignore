@@ -30,3 +30,7 @@ dist/
 # Local environment files
 .env
 .env.*
+
+*.csv
+
+testbench/
