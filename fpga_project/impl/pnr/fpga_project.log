@@ -1,7 +1,7 @@
-Reading netlist file: "/Users/geaboi/Documents/GitHub/GQH26-DTC/fpga_project/impl/gwsynthesis/fpga_project.vg"
-Parsing netlist file "/Users/geaboi/Documents/GitHub/GQH26-DTC/fpga_project/impl/gwsynthesis/fpga_project.vg" completed
+Reading netlist file: "C:\Users\Cole\Documents\GQH26-DTC\fpga_project\impl\gwsynthesis\fpga_project.vg"
+Parsing netlist file "C:\Users\Cole\Documents\GQH26-DTC\fpga_project\impl\gwsynthesis\fpga_project.vg" completed
 Processing netlist completed
-Reading constraint file: "/Users/geaboi/Documents/GitHub/GQH26-DTC/fpga_project/src/19_tang_nano_20k.cst"
+Reading constraint file: "C:\Users\Cole\Documents\GQH26-DTC\fpga_project\src\19_tang_nano_20k.cst"
 Physical Constraint parsed completed
 Running placement......
 [10%] Placement Phase 0 completed
@@ -22,10 +22,10 @@ Bitstream generation in progress......
 Bitstream generation completed
 Running power analysis......
 [100%] Power analysis completed
-Generate file "/Users/geaboi/Documents/GitHub/GQH26-DTC/fpga_project/impl/pnr/fpga_project.power.html" completed
-Generate file "/Users/geaboi/Documents/GitHub/GQH26-DTC/fpga_project/impl/pnr/fpga_project.pin.html" completed
-Generate file "/Users/geaboi/Documents/GitHub/GQH26-DTC/fpga_project/impl/pnr/fpga_project.rpt.html" completed
-Generate file "/Users/geaboi/Documents/GitHub/GQH26-DTC/fpga_project/impl/pnr/fpga_project.rpt.txt" completed
-Generate file "/Users/geaboi/Documents/GitHub/GQH26-DTC/fpga_project/impl/pnr/fpga_project.tr.html" completed
-Sat Oct  3 10:24:58 2026
+Generate file "C:\Users\Cole\Documents\GQH26-DTC\fpga_project\impl\pnr\fpga_project.power.html" completed
+Generate file "C:\Users\Cole\Documents\GQH26-DTC\fpga_project\impl\pnr\fpga_project.pin.html" completed
+Generate file "C:\Users\Cole\Documents\GQH26-DTC\fpga_project\impl\pnr\fpga_project.rpt.html" completed
+Generate file "C:\Users\Cole\Documents\GQH26-DTC\fpga_project\impl\pnr\fpga_project.rpt.txt" completed
+Generate file "C:\Users\Cole\Documents\GQH26-DTC\fpga_project\impl\pnr\fpga_project.tr.html" completed
+Sat Oct  3 14:05:32 2026
 

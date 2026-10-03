@@ -1,24 +1,24 @@
 GowinSynthesis start
 Running parser ...
-Analyzing VHDL file '/Users/geaboi/Documents/GitHub/GQH26-DTC/fpga_project/src/uart_rx.vhd'
-Analyzing entity 'uart_rx'("/Users/geaboi/Documents/GitHub/GQH26-DTC/fpga_project/src/uart_rx.vhd":4)
-Analyzing architecture 'rtl'("/Users/geaboi/Documents/GitHub/GQH26-DTC/fpga_project/src/uart_rx.vhd":16)
-Analyzing VHDL file '/Users/geaboi/Documents/GitHub/GQH26-DTC/fpga_project/src/uart_tx.vhd'
-Analyzing entity 'uart_tx'("/Users/geaboi/Documents/GitHub/GQH26-DTC/fpga_project/src/uart_tx.vhd":4)
-Analyzing architecture 'rtl'("/Users/geaboi/Documents/GitHub/GQH26-DTC/fpga_project/src/uart_tx.vhd":18)
-Analyzing VHDL file '/Users/geaboi/Documents/GitHub/GQH26-DTC/fpga_project/src/ma_engine.vhd'
-Analyzing entity 'ma_engine'("/Users/geaboi/Documents/GitHub/GQH26-DTC/fpga_project/src/ma_engine.vhd":5)
-Analyzing architecture 'rtl'("/Users/geaboi/Documents/GitHub/GQH26-DTC/fpga_project/src/ma_engine.vhd":17)
-Analyzing VHDL file '/Users/geaboi/Documents/GitHub/GQH26-DTC/fpga_project/src/top.vhd'
-Analyzing entity 'top'("/Users/geaboi/Documents/GitHub/GQH26-DTC/fpga_project/src/top.vhd":5)
-Analyzing architecture 'rtl'("/Users/geaboi/Documents/GitHub/GQH26-DTC/fpga_project/src/top.vhd":21)
-Processing 'top(rtl)'("/Users/geaboi/Documents/GitHub/GQH26-DTC/fpga_project/src/top.vhd":5)
-Processing 'uart_rx(rtl)'("/Users/geaboi/Documents/GitHub/GQH26-DTC/fpga_project/src/uart_rx.vhd":4)
-Processing 'uart_tx(rtl)'("/Users/geaboi/Documents/GitHub/GQH26-DTC/fpga_project/src/uart_tx.vhd":4)
-Processing 'ma_engine(rtl)'("/Users/geaboi/Documents/GitHub/GQH26-DTC/fpga_project/src/ma_engine.vhd":5)
+Analyzing VHDL file 'C:\Users\Cole\Documents\GQH26-DTC\fpga_project\src\ma_engine.vhd'
+Analyzing entity 'ma_engine'("C:\Users\Cole\Documents\GQH26-DTC\fpga_project\src\ma_engine.vhd":5)
+Analyzing architecture 'rtl'("C:\Users\Cole\Documents\GQH26-DTC\fpga_project\src\ma_engine.vhd":17)
+Analyzing VHDL file 'C:\Users\Cole\Documents\GQH26-DTC\fpga_project\src\uart_rx.vhd'
+Analyzing entity 'uart_rx'("C:\Users\Cole\Documents\GQH26-DTC\fpga_project\src\uart_rx.vhd":4)
+Analyzing architecture 'rtl'("C:\Users\Cole\Documents\GQH26-DTC\fpga_project\src\uart_rx.vhd":16)
+Analyzing VHDL file 'C:\Users\Cole\Documents\GQH26-DTC\fpga_project\src\uart_tx.vhd'
+Analyzing entity 'uart_tx'("C:\Users\Cole\Documents\GQH26-DTC\fpga_project\src\uart_tx.vhd":4)
+Analyzing architecture 'rtl'("C:\Users\Cole\Documents\GQH26-DTC\fpga_project\src\uart_tx.vhd":18)
+Analyzing VHDL file 'C:\Users\Cole\Documents\GQH26-DTC\fpga_project\src\top.vhd'
+Analyzing entity 'top'("C:\Users\Cole\Documents\GQH26-DTC\fpga_project\src\top.vhd":5)
+Analyzing architecture 'rtl'("C:\Users\Cole\Documents\GQH26-DTC\fpga_project\src\top.vhd":21)
+Processing 'top(rtl)'("C:\Users\Cole\Documents\GQH26-DTC\fpga_project\src\top.vhd":5)
+Processing 'uart_rx(rtl)'("C:\Users\Cole\Documents\GQH26-DTC\fpga_project\src\uart_rx.vhd":4)
+Processing 'uart_tx(rtl)'("C:\Users\Cole\Documents\GQH26-DTC\fpga_project\src\uart_tx.vhd":4)
+Processing 'ma_engine(rtl)'("C:\Users\Cole\Documents\GQH26-DTC\fpga_project\src\ma_engine.vhd":5)
 NOTE  (EX0101) : Current top module is "top"
 [5%] Running netlist conversion ...
-WARN  (CV0016) : Input reset_btn is unused("/Users/geaboi/Documents/GitHub/GQH26-DTC/fpga_project/src/top.vhd":13)
+WARN  (CV0016) : Input reset_btn is unused("C:\Users\Cole\Documents\GQH26-DTC\fpga_project\src\top.vhd":13)
 Running device independent optimization ...
 [10%] Optimizing Phase 0 completed
 [15%] Optimizing Phase 1 completed
@@ -34,6 +34,6 @@ Running technical mapping ...
 [75%] Tech-Mapping Phase 2 completed
 [80%] Tech-Mapping Phase 3 completed
 [90%] Tech-Mapping Phase 4 completed
-[95%] Generate netlist file "/Users/geaboi/Documents/GitHub/GQH26-DTC/fpga_project/impl/gwsynthesis/fpga_project.vg" completed
-[100%] Generate report file "/Users/geaboi/Documents/GitHub/GQH26-DTC/fpga_project/impl/gwsynthesis/fpga_project_syn.rpt.html" completed
+[95%] Generate netlist file "C:\Users\Cole\Documents\GQH26-DTC\fpga_project\impl\gwsynthesis\fpga_project.vg" completed
+[100%] Generate report file "C:\Users\Cole\Documents\GQH26-DTC\fpga_project\impl\gwsynthesis\fpga_project_syn.rpt.html" completed
 GowinSynthesis finish

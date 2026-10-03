@@ -36,7 +36,6 @@ architecture rtl of ma_engine is
     attribute syn_srlstyle of vld_a : signal is "registers";
     attribute syn_srlstyle of vld_b : signal is "registers";
 
-    signal calc     : std_logic := '0';
     signal full     : std_logic;
     signal tail     : std_logic_vector(15 downto 0);
     signal prev     : unsigned(15 downto 0);
@@ -59,6 +58,7 @@ begin
     price_u  <= unsigned(price);
 
     oldest  <= unsigned(tail) when full = '1' else (others => '0');
+    
     new_sum <= sum_cur + price_u - oldest;
     old_avg <= sum_cur(19 downto 4);
     new_avg <= new_sum(19 downto 4);
@@ -74,7 +74,6 @@ begin
     begin
         if rising_edge(clk) then
             done <= '0';
-            calc <= start;
 
             if clear = '1' then
                 vld_a  <= (others => '0');
@@ -83,7 +82,7 @@ begin
                 sum_b  <= (others => '0');
                 last_a <= ACT_NONE;
                 last_b <= ACT_NONE;
-            elsif calc = '1' then
+            elsif start = '1' then
                 action <= next_act;
                 done   <= '1';
                 if sel = '1' then

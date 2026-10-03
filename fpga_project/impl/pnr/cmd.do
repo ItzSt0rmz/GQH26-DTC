@@ -1,8 +1,8 @@
--d /Users/geaboi/Documents/GitHub/GQH26-DTC/fpga_project/impl/gwsynthesis/fpga_project.vg
+-d C:\Users\Cole\Documents\GQH26-DTC\fpga_project\impl\gwsynthesis\fpga_project.vg
 -p GW2AR-18C-QFN88-8
 -pn GW2AR-LV18QN88C8/I7
--cst /Users/geaboi/Documents/GitHub/GQH26-DTC/fpga_project/src/19_tang_nano_20k.cst
--cfg /Users/geaboi/Documents/GitHub/GQH26-DTC/fpga_project/impl/pnr/device.cfg
+-cst C:\Users\Cole\Documents\GQH26-DTC\fpga_project\src\19_tang_nano_20k.cst
+-cfg C:\Users\Cole\Documents\GQH26-DTC\fpga_project\impl\pnr\device.cfg
 -bit
 -tr
 -ph
