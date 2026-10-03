@@ -19,10 +19,13 @@ architecture rtl of ma_engine is
     constant ACT_SELL : std_logic_vector(1 downto 0) := "01";
     constant ACT_BUY  : std_logic_vector(1 downto 0) := "10";
 
-    type win_t is array (0 to 15) of std_logic_vector(15 downto 0);
+    type mem_t is array (0 to 31) of std_logic_vector(15 downto 0);
 
-    signal win_a  : win_t := (others => (others => '0'));
-    signal win_b  : win_t := (others => (others => '0'));
+    signal mem    : mem_t := (others => (others => '0'));
+    signal ptr_a  : unsigned(3 downto 0) := (others => '0');
+    signal ptr_b  : unsigned(3 downto 0) := (others => '0');
+    signal prev_a : unsigned(15 downto 0) := (others => '0');
+    signal prev_b : unsigned(15 downto 0) := (others => '0');
     signal vld_a  : std_logic_vector(15 downto 0) := (others => '0');
     signal vld_b  : std_logic_vector(15 downto 0) := (others => '0');
     signal sum_a  : unsigned(19 downto 0) := (others => '0');
@@ -30,15 +33,17 @@ architecture rtl of ma_engine is
     signal last_a : std_logic_vector(1 downto 0) := ACT_NONE;
     signal last_b : std_logic_vector(1 downto 0) := ACT_NONE;
 
+    attribute syn_ramstyle : string;
+    attribute syn_ramstyle of mem : signal is "block_ram";
     attribute syn_srlstyle : string;
-    attribute syn_srlstyle of win_a : signal is "registers";
-    attribute syn_srlstyle of win_b : signal is "registers";
     attribute syn_srlstyle of vld_a : signal is "registers";
     attribute syn_srlstyle of vld_b : signal is "registers";
 
     signal calc     : std_logic := '0';
     signal full     : std_logic;
-    signal tail     : std_logic_vector(15 downto 0);
+    signal ptr_cur  : unsigned(3 downto 0);
+    signal addr     : unsigned(4 downto 0);
+    signal tail     : std_logic_vector(15 downto 0) := (others => '0');
     signal prev     : unsigned(15 downto 0);
     signal sum_cur  : unsigned(19 downto 0);
     signal last_cur : std_logic_vector(1 downto 0);
@@ -52,8 +57,9 @@ architecture rtl of ma_engine is
     signal next_act : std_logic_vector(1 downto 0);
 begin
     full     <= vld_b(15) when sel = '1' else vld_a(15);
-    tail     <= win_b(15) when sel = '1' else win_a(15);
-    prev     <= unsigned(win_b(0)) when sel = '1' else unsigned(win_a(0));
+    ptr_cur  <= ptr_b when sel = '1' else ptr_a;
+    addr     <= sel & ptr_cur;
+    prev     <= prev_b when sel = '1' else prev_a;
     sum_cur  <= sum_b when sel = '1' else sum_a;
     last_cur <= last_b when sel = '1' else last_a;
     price_u  <= unsigned(price);
@@ -73,10 +79,24 @@ begin
     process(clk)
     begin
         if rising_edge(clk) then
+            if calc = '1' and clear = '0' then
+                mem(to_integer(addr)) <= price;
+            end if;
+            if start = '1' then
+                tail <= mem(to_integer(addr));
+            end if;
+        end if;
+    end process;
+
+    process(clk)
+    begin
+        if rising_edge(clk) then
             done <= '0';
             calc <= start;
 
             if clear = '1' then
+                ptr_a  <= (others => '0');
+                ptr_b  <= (others => '0');
                 vld_a  <= (others => '0');
                 vld_b  <= (others => '0');
                 sum_a  <= (others => '0');
@@ -87,18 +107,14 @@ begin
                 action <= next_act;
                 done   <= '1';
                 if sel = '1' then
-                    win_b(0) <= price;
-                    for k in 1 to 15 loop
-                        win_b(k) <= win_b(k - 1);
-                    end loop;
+                    ptr_b  <= ptr_b + 1;
+                    prev_b <= price_u;
                     vld_b  <= vld_b(14 downto 0) & '1';
                     sum_b  <= new_sum;
                     last_b <= next_act;
                 else
-                    win_a(0) <= price;
-                    for k in 1 to 15 loop
-                        win_a(k) <= win_a(k - 1);
-                    end loop;
+                    ptr_a  <= ptr_a + 1;
+                    prev_a <= price_u;
                     vld_a  <= vld_a(14 downto 0) & '1';
                     sum_a  <= new_sum;
                     last_a <= next_act;
