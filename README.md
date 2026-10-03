@@ -186,7 +186,13 @@ The robust test result recorded in `results/trade_summary_100.txt` shows:
 
 ### LUT Usage
 
-After synthesis, the Gowin Resource Usage Summary reports **118 LUTs** (organizer reference: 542). The PnR report is `fpga_project/impl/pnr/fpga_project.rpt.txt`.
+After synthesis, the Gowin Resource Usage Summary reports **0 LUTs** (0 LUT, 0 ALU; organizer reference: 542). The logic is implemented in block RAM (microcode ROMs plus state RAM) rather than LUT fabric.
+
+- Logic: 0 / 20736 (0%)
+- Registers: 8 / 15750 (<1%), all as FF, none as latch
+- BSRAM: 41 / 46
+
+The PnR report is `fpga_project/impl/pnr/fpga_project.rpt.txt`.
 
 ## External Libraries / IP / Starter Code
 
