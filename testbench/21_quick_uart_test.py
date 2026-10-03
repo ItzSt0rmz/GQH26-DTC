@@ -15,7 +15,7 @@ from collections import deque
 
 import serial
 
-PORT = "/dev/cu.usbserial-20250303171"      # your board's COM port (see Windows Device Manager)
+PORT = "COM11"      # your board's COM port (see Windows Device Manager)
 BAUD = 115200
 
 ACTION_NONE = 0x00
