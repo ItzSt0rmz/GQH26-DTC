@@ -3,22 +3,22 @@
  "Files" : [
   {
    "Library" : "work",
-   "Path" : "/Users/geaboi/Documents/GitHub/GQH26-DTC/fpga_project/src/top.vhd",
+   "Path" : "C:/Users/Cole/Documents/GQH26-DTC/fpga_project/src/ma_engine.vhd",
    "Type" : "vhdl"
   },
   {
    "Library" : "work",
-   "Path" : "/Users/geaboi/Documents/GitHub/GQH26-DTC/fpga_project/src/uart_rx.vhd",
+   "Path" : "C:/Users/Cole/Documents/GQH26-DTC/fpga_project/src/top.vhd",
    "Type" : "vhdl"
   },
   {
    "Library" : "work",
-   "Path" : "/Users/geaboi/Documents/GitHub/GQH26-DTC/fpga_project/src/uart_tx.vhd",
+   "Path" : "C:/Users/Cole/Documents/GQH26-DTC/fpga_project/src/uart_rx.vhd",
    "Type" : "vhdl"
   },
   {
    "Library" : "work",
-   "Path" : "/Users/geaboi/Documents/GitHub/GQH26-DTC/fpga_project/src/ma_engine.vhd",
+   "Path" : "C:/Users/Cole/Documents/GQH26-DTC/fpga_project/src/uart_tx.vhd",
    "Type" : "vhdl"
   }
  ],
@@ -26,7 +26,7 @@
 
  ],
  "LoopLimit" : 2000,
- "ResultFile" : "/Users/geaboi/Documents/GitHub/GQH26-DTC/fpga_project/impl/temp/rtl_parser.result",
+ "ResultFile" : "C:/Users/Cole/Documents/GQH26-DTC/fpga_project/impl/temp/rtl_parser.result",
  "Top" : "",
  "VerilogStd" : "verilog_2001",
  "VhdlStd" : "vhdl_93"
