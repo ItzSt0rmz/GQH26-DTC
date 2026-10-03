@@ -13,8 +13,8 @@ Timeouts: 0
 
 Estimated correctness points: 70.0 / 70
 
-Average successful round-trip latency: 16526.38 us
-Average successful round-trip latency: 16.526 ms
+Average successful round-trip latency: 16684.79 us
+Average successful round-trip latency: 16.685 ms
 
 UART port: COM11
 UART baud rate: 115200
