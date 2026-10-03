@@ -1,0 +1,21 @@
+FPGA Dual-Item Trade Signal Test
+================================
+
+Requested packets: 100
+Packets successfully received: 100
+Warm-up packets ignored: 16
+Scored packets (fixed): 84
+Correct packets: 84
+Packet correctness: 100.00%
+Correct individual actions: 168/168
+Action correctness: 100.00%
+Timeouts: 0
+
+Estimated correctness points: 70.0 / 70
+
+Average successful round-trip latency: 16927.66 us
+Average successful round-trip latency: 16.928 ms
+
+UART port: /dev/cu.usbserial-20250303171
+UART baud rate: 115200
+Practice seed: 0x57214720

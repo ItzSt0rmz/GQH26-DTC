@@ -33,7 +33,10 @@ dist/
 
 *.csv
 
-testbench/
-
-fpga_project/impl/
+# Gowin build outputs: keep only the final bitstream and PnR report (judges program from the .fs)
+fpga_project/impl/*
+!fpga_project/impl/pnr/
+fpga_project/impl/pnr/*
+!fpga_project/impl/pnr/fpga_project.fs
+!fpga_project/impl/pnr/fpga_project.rpt.txt
 fpga_project/*.gprj.user
