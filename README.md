@@ -165,7 +165,7 @@ The robust test result recorded in `results/trade_summary_100.txt` shows:
 - Correct individual actions: 168/168
 - Timeouts: 0
 - Estimated correctness points: 70.0 / 70
-- Average successful round-trip latency: 16.872 ms
+- Average successful round-trip latency: 16.927 ms
 
 ## Judging Metrics / Results
 
@@ -180,7 +180,7 @@ The robust test result recorded in `results/trade_summary_100.txt` shows:
 
 ### Latency
 
-- Average measured round-trip latency: 16.872 ms (16871.60 us)
+- Average measured round-trip latency: 16.927 ms (16926.74 us)
 - Idle time or buffering between response bytes (BL616 workaround): The UART transmitter includes a short inter-frame gap (see `top.vhd` / `roms.vhd`), which is required for the USB-UART compatibility workaround; no additional host-side delay is expected beyond the UART timing itself.
 - Test/setup used: `22_robust_uart_test.py`, 115200 baud, 8N1, measured on the local serial link using `time.perf_counter_ns()`
 

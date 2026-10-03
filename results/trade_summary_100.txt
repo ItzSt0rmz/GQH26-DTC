@@ -13,8 +13,8 @@ Timeouts: 0
 
 Estimated correctness points: 70.0 / 70
 
-Average successful round-trip latency: 16872.00 us
-Average successful round-trip latency: 16.872 ms
+Average successful round-trip latency: 16926.74 us
+Average successful round-trip latency: 16.927 ms
 
 UART port: /dev/cu.usbserial-20250303171
 UART baud rate: 115200
