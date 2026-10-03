@@ -1,0 +1,33 @@
+{
+ "Device" : "GW2AR-18C",
+ "Files" : [
+  {
+   "Library" : "work",
+   "Path" : "/Users/geaboi/Documents/GitHub/GQH26-DTC/fpga_project/src/top.vhd",
+   "Type" : "vhdl"
+  },
+  {
+   "Library" : "work",
+   "Path" : "/Users/geaboi/Documents/GitHub/GQH26-DTC/fpga_project/src/uart_rx.vhd",
+   "Type" : "vhdl"
+  },
+  {
+   "Library" : "work",
+   "Path" : "/Users/geaboi/Documents/GitHub/GQH26-DTC/fpga_project/src/uart_tx.vhd",
+   "Type" : "vhdl"
+  },
+  {
+   "Library" : "work",
+   "Path" : "/Users/geaboi/Documents/GitHub/GQH26-DTC/fpga_project/src/ma_engine.vhd",
+   "Type" : "vhdl"
+  }
+ ],
+ "IncludePath" : [
+
+ ],
+ "LoopLimit" : 2000,
+ "ResultFile" : "/Users/geaboi/Documents/GitHub/GQH26-DTC/fpga_project/impl/temp/rtl_parser.result",
+ "Top" : "",
+ "VerilogStd" : "verilog_2001",
+ "VhdlStd" : "vhdl_93"
+}

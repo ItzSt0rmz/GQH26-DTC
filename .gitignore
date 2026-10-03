@@ -1,0 +1,32 @@
+# Python virtual environment
+.venv/
+venv/
+ENV/
+
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# VS Code settings
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Test artifacts
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# Build outputs
+build/
+dist/
+*.egg-info/
+
+# Local environment files
+.env
+.env.*
