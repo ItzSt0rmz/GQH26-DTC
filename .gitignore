@@ -30,3 +30,10 @@ dist/
 # Local environment files
 .env
 .env.*
+
+*.csv
+
+testbench/
+
+fpga_project/impl/
+fpga_project/*.gprj.user
