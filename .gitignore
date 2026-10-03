@@ -34,3 +34,6 @@ dist/
 *.csv
 
 testbench/
+
+fpga_project/impl/
+fpga_project/*.gprj.user
