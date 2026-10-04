@@ -2,7 +2,7 @@
 
 ## Team Members
 
-- Tyler Lee - tylerrleee0105@gmail.com
+- Tyler Le - tyleee0105@gmail.com
 - Dustin N - dustinn1204@gmail.com
 - Cole Hawkins - thecolehawkins@gmail.com
 
